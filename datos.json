@@ -220,6 +220,19 @@
       "date": "2026-06-01",
       "status": "pending",
       "commentAdmin": ""
+    },
+    {
+      "id": "t1779253309424",
+      "created": "2026-05-20T05:01:49.424Z",
+      "title": "Protocolo recibo Coca Cola",
+      "desc": "",
+      "commentCristian": "",
+      "area": "Bodega",
+      "priority": "alta",
+      "assignee": "Cristian y Jesus",
+      "date": "",
+      "status": "pending",
+      "commentAdmin": ""
     }
   ]
 }
