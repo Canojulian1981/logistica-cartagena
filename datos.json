@@ -1,19 +1,6 @@
 {
   "tasks": [
     {
-      "id": "t001",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Plan de emergencia",
-      "desc": "",
-      "area": "",
-      "priority": "alta",
-      "assignee": "Cristian y Tatiana Vela",
-      "date": "",
-      "status": "pending",
-      "commentCristian": "",
-      "commentAdmin": "Que fecha te dio Tatiana Vela? Que dia se van a conectar?"
-    },
-    {
       "id": "t002",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Recoleccion Basura",
