@@ -158,13 +158,15 @@
     {
       "id": "t018",
       "created": "2026-05-14T18:15:00.000Z",
-      "title": "To do venta cartÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n",
-      "desc": "Se pregunta en varias chatarreras pero nos informan que se estÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ comprando el kilo a 70 pesos, se venden unidades por caja a 150 pesos la unidad x 90 cajas.",
+      "title": "To do Venta Carton",
+      "desc": "",
       "area": "Bodega",
-      "priority": "baja",
+      "priority": "alta",
       "assignee": "",
       "date": "",
-      "status": "progress"
+      "status": "progress",
+      "commentCristian": "",
+      "commentAdmin": "Actualizar con venta Cobre"
     },
     {
       "id": "t019",
