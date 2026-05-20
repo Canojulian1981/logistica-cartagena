@@ -133,13 +133,15 @@
     {
       "id": "t014",
       "created": "2026-05-14T18:15:00.000Z",
-      "title": "Compra e instalaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n aires oficina",
-      "desc": "Falta instalaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n.",
+      "title": "instalacion Aires Oficinas",
+      "desc": "",
       "area": "Bodega",
-      "priority": "baja",
-      "assignee": "",
+      "priority": "media",
+      "assignee": "Cristian",
       "date": "",
-      "status": "progress"
+      "status": "progress",
+      "commentCristian": "",
+      "commentAdmin": ""
     },
     {
       "id": "t015",
