@@ -1,19 +1,6 @@
 {
   "tasks": [
     {
-      "id": "t014",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "instalacion Aires Oficinas",
-      "desc": "",
-      "area": "Bodega",
-      "priority": "media",
-      "assignee": "Cristian",
-      "date": "",
-      "status": "progress",
-      "commentCristian": "",
-      "commentAdmin": ""
-    },
-    {
       "id": "t017",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Cotizacion cajon con llave",
