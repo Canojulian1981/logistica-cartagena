@@ -1,19 +1,6 @@
 {
   "tasks": [
     {
-      "id": "t004",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Arreglo Piso y Entrada Cuartos Frios",
-      "desc": "",
-      "area": "Bodega",
-      "priority": "alta",
-      "assignee": "Alfonso",
-      "date": "2026-05-29",
-      "status": "progress",
-      "commentCristian": "",
-      "commentAdmin": ""
-    },
-    {
       "id": "t005",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Tanque de agua",
