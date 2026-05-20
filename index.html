@@ -79,7 +79,15 @@ select { font-size: 13px; padding: 7px 10px; border-radius: var(--radius); borde
 /* BOARD */
 .board { padding: 0 1.5rem 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 @media (max-width: 750px) { .board { grid-template-columns: 1fr; } }
-.column { background: var(--bg-secondary); border-radius: var(--radius-lg); padding: 12px; border: 0.5px solid var(--border); }
+.column { border-radius: var(--radius-lg); padding: 12px; border: 0.5px solid var(--border); }
+.column.col-pending-bg { background: #FFFBF0; border-color: #FAC775; }
+.column.col-progress-bg { background: #F0F6FF; border-color: #B5D4F4; }
+.column.col-done-bg { background: #F0FAF5; border-color: #9FE1CB; }
+@media (prefers-color-scheme: dark) {
+  .column.col-pending-bg { background: #2A2008; border-color: #854F0B; }
+  .column.col-progress-bg { background: #081828; border-color: #185FA5; }
+  .column.col-done-bg { background: #082018; border-color: #0F6E56; }
+}
 .col-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; padding: 0 2px; }
 .col-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); display: flex; align-items: center; gap: 7px; }
 .col-count { font-size: 11px; background: var(--bg-primary); border: 0.5px solid var(--border); border-radius: 20px; padding: 2px 9px; color: var(--text-secondary); }
@@ -94,7 +102,16 @@ select { font-size: 13px; padding: 7px 10px; border-radius: var(--radius); borde
 .priority-badge.alta { background: #FCEBEB; color: #A32D2D; }
 .priority-badge.media { background: #FAEEDA; color: #854F0B; }
 .priority-badge.baja { background: #EAF3DE; color: #3B6D11; }
-.card-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 9px; }
+.card-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 8px; }
+.card-comment { font-size: 12px; line-height: 1.5; margin-bottom: 6px; padding: 7px 10px; border-radius: var(--radius); display: flex; gap: 6px; align-items: flex-start; }
+.card-comment i { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+.card-comment strong { font-weight: 600; }
+.admin-comment { background: #E6F1FB; color: #185FA5; border: 0.5px solid #B5D4F4; }
+.cristian-comment { background: #E1F5EE; color: #0F6E56; border: 0.5px solid #9FE1CB; }
+@media (prefers-color-scheme: dark) {
+  .admin-comment { background: #042C53; color: #B5D4F4; border-color: #185FA5; }
+  .cristian-comment { background: #04342C; color: #9FE1CB; border-color: #0F6E56; }
+}
 .card-meta { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 5px; }
 .card-tags { display: flex; gap: 4px; flex-wrap: wrap; }
 .tag { font-size: 10px; padding: 2px 8px; border-radius: 20px; background: var(--bg-secondary); color: var(--text-secondary); border: 0.5px solid var(--border); display: flex; align-items: center; gap: 3px; font-weight: 500; }
@@ -104,6 +121,7 @@ select { font-size: 13px; padding: 7px 10px; border-radius: var(--radius); borde
 .tag.area-rrhh { background: #EEEDFE; color: #534AB7; border-color: #CECBF6; }
 .tag.area-sanidad { background: #FCEBEB; color: #A32D2D; border-color: #F7C1C1; }
 .tag.area-mant { background: #F1EFE8; color: #5F5E5A; border-color: #B4B2A9; }
+.tag.area-inv { background: #EEF0FD; color: #3D44B5; border-color: #B0B5F0; }
 @media (prefers-color-scheme: dark) {
   .tag.area-bodega { background: #04342C; color: #9FE1CB; border-color: #0F6E56; }
   .tag.area-documentacion { background: #042C53; color: #B5D4F4; border-color: #185FA5; }
@@ -111,6 +129,7 @@ select { font-size: 13px; padding: 7px 10px; border-radius: var(--radius); borde
   .tag.area-rrhh { background: #26215C; color: #CECBF6; border-color: #534AB7; }
   .tag.area-sanidad { background: #501313; color: #F7C1C1; border-color: #A32D2D; }
   .tag.area-mant { background: #2C2C2A; color: #D3D1C7; border-color: #5F5E5A; }
+  .tag.area-inv { background: #1A1C4A; color: #B0B5F0; border-color: #3D44B5; }
 }
 .card-date { font-size: 11px; color: var(--text-tertiary); display: flex; align-items: center; gap: 3px; }
 .card-date.overdue { color: #A32D2D; font-weight: 500; }
@@ -239,19 +258,20 @@ textarea.form-input { resize: vertical; min-height: 80px; }
     <option value="Recursos Humanos">👥 Recursos Humanos</option>
     <option value="Sanidad">🏥 Sanidad</option>
     <option value="Mantenimientos y Arreglos">🔧 Mantenimientos y Arreglos</option>
+    <option value="Inventarios">📦 Inventarios</option>
   </select>
 </div>
 
 <div class="board">
-  <div class="column">
+  <div class="column col-pending-bg">
     <div class="col-header"><div class="col-title"><span class="dot pending"></span> Pendiente</div><span class="col-count" id="col-count-pending">0</span></div>
     <div id="col-pending"></div>
   </div>
-  <div class="column">
+  <div class="column col-progress-bg">
     <div class="col-header"><div class="col-title"><span class="dot progress"></span> En progreso</div><span class="col-count" id="col-count-progress">0</span></div>
     <div id="col-progress"></div>
   </div>
-  <div class="column">
+  <div class="column col-done-bg">
     <div class="col-header"><div class="col-title"><span class="dot done"></span> Completado</div><span class="col-count" id="col-count-done">0</span></div>
     <div id="col-done"></div>
   </div>
@@ -268,14 +288,14 @@ textarea.form-input { resize: vertical; min-height: 80px; }
       <input type="text" id="f-title" class="form-input" placeholder="Ej: Revisar documentos de importación">
     </div>
     <div class="form-group">
-      <label class="form-label">Descripción</label>
-      <textarea id="f-desc" class="form-input" placeholder="Detalles del pendiente..."></textarea>
+      <label class="form-label"><i class="ti ti-message-circle-2" style="font-size:13px;color:#0F6E56" aria-hidden="true"></i> Comentario de Cristian</label>
+      <textarea id="f-desc" class="form-input" placeholder="Respuesta o avance de Cristian..."></textarea>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">Área</label>
         <select id="f-area" class="form-input">
-          <option>Bodega</option><option>Documentación</option><option>Transporte</option><option>Recursos Humanos</option><option>Sanidad</option><option>Mantenimientos y Arreglos</option>
+          <option>Bodega</option><option>Documentación</option><option>Transporte</option><option>Recursos Humanos</option><option>Sanidad</option><option>Mantenimientos y Arreglos</option><option>Inventarios</option>
         </select>
       </div>
       <div class="form-group">
@@ -301,6 +321,11 @@ textarea.form-input { resize: vertical; min-height: 80px; }
         <option value="pending">Pendiente</option><option value="progress">En progreso</option><option value="done">Completado</option>
       </select>
     </div>
+    <div class="form-group">
+      <label class="form-label"><i class="ti ti-message-circle" style="font-size:13px;color:#185FA5" aria-hidden="true"></i> Mi comentario / Pregunta</label>
+      <textarea id="f-comment-admin" class="form-input" placeholder="Escribe tu comentario o pregunta aquí..."></textarea>
+    </div>
+
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
       <button class="btn-save" id="btn-save" onclick="saveTask()"><i class="ti ti-device-floppy" aria-hidden="true"></i> Guardar</button>
@@ -430,10 +455,13 @@ async function connectGitHub() {
 }
 
 function showSettings() {
-  if (confirm('¿Desconectar esta cuenta de GitHub y reconfigurar?')) {
+  const respuesta = prompt('🔒 ¿Cuál fue el nombre de tu primera mascota (perro)?');
+  if (respuesta !== null && respuesta.trim().toLowerCase() === 'motas') {
     localStorage.removeItem(CONF_KEY);
     localStorage.removeItem(CONF_KEY + '_bk');
     location.reload();
+  } else if (respuesta !== null) {
+    alert('Respuesta incorrecta. No se puede desconectar.');
   }
 }
 
@@ -474,6 +502,7 @@ function areaIcon(area) {
     'Recursos Humanos': '<i class="ti ti-users" style="font-size:10px" aria-hidden="true"></i>',
     'Sanidad': '<i class="ti ti-heart-rate-monitor" style="font-size:10px" aria-hidden="true"></i>',
     'Mantenimientos y Arreglos': '<i class="ti ti-tool" style="font-size:10px" aria-hidden="true"></i>',
+    'Inventarios': '<i class="ti ti-package" style="font-size:10px" aria-hidden="true"></i>',
   };
   return icons[area] || '<i class="ti ti-tag" style="font-size:10px" aria-hidden="true"></i>';
 }
@@ -485,6 +514,7 @@ function areaClass(area) {
     'Recursos Humanos': 'area-rrhh',
     'Sanidad': 'area-sanidad',
     'Mantenimientos y Arreglos': 'area-mant',
+    'Inventarios': 'area-inv',
   };
   return classes[area] || '';
 }
@@ -499,6 +529,8 @@ function cardHTML(t) {
       <span class="priority-badge ${t.priority}">${t.priority}</span>
     </div>
     ${t.desc ? `<div class="card-desc">${esc(t.desc)}</div>` : ''}
+    ${t.commentAdmin ? `<div class="card-comment admin-comment"><i class="ti ti-message-circle" aria-hidden="true"></i> <strong>Mi comentario:</strong> ${esc(t.commentAdmin)}</div>` : ''}
+    ${t.commentCristian ? `<div class="card-comment cristian-comment"><i class="ti ti-message-circle-2" aria-hidden="true"></i> <strong>Cristian:</strong> ${esc(t.commentCristian)}</div>` : ''}
     <div class="card-meta">
       <div class="card-tags">
         <span class="tag ${areaClass(t.area)}">${areaIcon(t.area)} ${esc(t.area)}</span>
@@ -549,13 +581,15 @@ function editTask(id) {
   document.getElementById('f-assignee').value = t.assignee || '';
   document.getElementById('f-date').value = t.date || '';
   document.getElementById('f-status').value = t.status;
+  document.getElementById('f-desc').value = t.commentCristian || '';
+  document.getElementById('f-comment-admin').value = t.commentAdmin || '';
   document.getElementById('modal').classList.add('active');
 }
 
 function openModal() {
   editingId = null;
   document.getElementById('modal-title').textContent = 'Nuevo pendiente';
-  ['f-title','f-desc','f-assignee','f-date'].forEach(id => document.getElementById(id).value = '');
+  ['f-title','f-desc','f-assignee','f-date','f-comment-admin'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('f-area').value = 'Importaciones';
   document.getElementById('f-priority').value = 'media';
   document.getElementById('f-status').value = 'pending';
@@ -574,12 +608,15 @@ async function saveTask() {
 
   const data = {
     title,
-    desc: document.getElementById('f-desc').value.trim(),
+    desc: '',
+    commentCristian: document.getElementById('f-desc').value.trim(),
     area: document.getElementById('f-area').value,
     priority: document.getElementById('f-priority').value,
     assignee: document.getElementById('f-assignee').value.trim(),
     date: document.getElementById('f-date').value,
     status: document.getElementById('f-status').value,
+    commentAdmin: document.getElementById('f-comment-admin').value.trim(),
+
   };
 
   if (editingId) {
