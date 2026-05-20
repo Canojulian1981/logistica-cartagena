@@ -97,7 +97,21 @@ select { font-size: 13px; padding: 7px 10px; border-radius: var(--radius); borde
 .card-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 9px; }
 .card-meta { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 5px; }
 .card-tags { display: flex; gap: 4px; flex-wrap: wrap; }
-.tag { font-size: 10px; padding: 2px 7px; border-radius: 20px; background: var(--bg-secondary); color: var(--text-secondary); border: 0.5px solid var(--border); display: flex; align-items: center; gap: 3px; }
+.tag { font-size: 10px; padding: 2px 8px; border-radius: 20px; background: var(--bg-secondary); color: var(--text-secondary); border: 0.5px solid var(--border); display: flex; align-items: center; gap: 3px; font-weight: 500; }
+.tag.area-bodega { background: #E1F5EE; color: #0F6E56; border-color: #9FE1CB; }
+.tag.area-documentacion { background: #E6F1FB; color: #185FA5; border-color: #B5D4F4; }
+.tag.area-transporte { background: #FAEEDA; color: #854F0B; border-color: #FAC775; }
+.tag.area-rrhh { background: #EEEDFE; color: #534AB7; border-color: #CECBF6; }
+.tag.area-sanidad { background: #FCEBEB; color: #A32D2D; border-color: #F7C1C1; }
+.tag.area-mant { background: #F1EFE8; color: #5F5E5A; border-color: #B4B2A9; }
+@media (prefers-color-scheme: dark) {
+  .tag.area-bodega { background: #04342C; color: #9FE1CB; border-color: #0F6E56; }
+  .tag.area-documentacion { background: #042C53; color: #B5D4F4; border-color: #185FA5; }
+  .tag.area-transporte { background: #412402; color: #FAC775; border-color: #854F0B; }
+  .tag.area-rrhh { background: #26215C; color: #CECBF6; border-color: #534AB7; }
+  .tag.area-sanidad { background: #501313; color: #F7C1C1; border-color: #A32D2D; }
+  .tag.area-mant { background: #2C2C2A; color: #D3D1C7; border-color: #5F5E5A; }
+}
 .card-date { font-size: 11px; color: var(--text-tertiary); display: flex; align-items: center; gap: 3px; }
 .card-date.overdue { color: #A32D2D; font-weight: 500; }
 .card-actions { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 9px; border-top: 0.5px solid var(--border); padding-top: 9px; }
@@ -219,12 +233,12 @@ textarea.form-input { resize: vertical; min-height: 80px; }
   </select>
   <select id="filter-area" onchange="renderBoard()">
     <option value="">Todas las áreas</option>
-    <option value="Importaciones">Importaciones</option>
-    <option value="Exportaciones">Exportaciones</option>
-    <option value="Almacén">Almacén</option>
-    <option value="Transporte">Transporte</option>
-    <option value="Documentación">Documentación</option>
-    <option value="Aduanas">Aduanas</option>
+    <option value="Bodega">🏭 Bodega</option>
+    <option value="Documentación">📄 Documentación</option>
+    <option value="Transporte">🚛 Transporte</option>
+    <option value="Recursos Humanos">👥 Recursos Humanos</option>
+    <option value="Sanidad">🏥 Sanidad</option>
+    <option value="Mantenimientos y Arreglos">🔧 Mantenimientos y Arreglos</option>
   </select>
 </div>
 
@@ -261,8 +275,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
       <div class="form-group">
         <label class="form-label">Área</label>
         <select id="f-area" class="form-input">
-          <option>Importaciones</option><option>Exportaciones</option><option>Almacén</option>
-          <option>Transporte</option><option>Documentación</option><option>Aduanas</option>
+          <option>Bodega</option><option>Documentación</option><option>Transporte</option><option>Recursos Humanos</option><option>Sanidad</option><option>Mantenimientos y Arreglos</option>
         </select>
       </div>
       <div class="form-group">
@@ -437,6 +450,29 @@ function renderBoard() {
   document.getElementById('count-done').textContent = cols.done.length;
 }
 
+function areaIcon(area) {
+  const icons = {
+    'Bodega': '<i class="ti ti-building-warehouse" style="font-size:10px" aria-hidden="true"></i>',
+    'Documentación': '<i class="ti ti-file-text" style="font-size:10px" aria-hidden="true"></i>',
+    'Transporte': '<i class="ti ti-truck" style="font-size:10px" aria-hidden="true"></i>',
+    'Recursos Humanos': '<i class="ti ti-users" style="font-size:10px" aria-hidden="true"></i>',
+    'Sanidad': '<i class="ti ti-heart-rate-monitor" style="font-size:10px" aria-hidden="true"></i>',
+    'Mantenimientos y Arreglos': '<i class="ti ti-tool" style="font-size:10px" aria-hidden="true"></i>',
+  };
+  return icons[area] || '<i class="ti ti-tag" style="font-size:10px" aria-hidden="true"></i>';
+}
+function areaClass(area) {
+  const classes = {
+    'Bodega': 'area-bodega',
+    'Documentación': 'area-documentacion',
+    'Transporte': 'area-transporte',
+    'Recursos Humanos': 'area-rrhh',
+    'Sanidad': 'area-sanidad',
+    'Mantenimientos y Arreglos': 'area-mant',
+  };
+  return classes[area] || '';
+}
+
 function cardHTML(t) {
   const over = t.date && t.status !== 'done' && new Date(t.date+'T00:00:00') < new Date(new Date().toDateString());
   const nextLabel = { pending:'Mover a En progreso', progress:'Marcar completado', done:'Reabrir' };
@@ -449,7 +485,7 @@ function cardHTML(t) {
     ${t.desc ? `<div class="card-desc">${esc(t.desc)}</div>` : ''}
     <div class="card-meta">
       <div class="card-tags">
-        <span class="tag"><i class="ti ti-building" style="font-size:10px" aria-hidden="true"></i> ${esc(t.area)}</span>
+        <span class="tag ${areaClass(t.area)}">${areaIcon(t.area)} ${esc(t.area)}</span>
         ${t.assignee ? `<span class="tag"><i class="ti ti-user" style="font-size:10px" aria-hidden="true"></i> ${esc(t.assignee)}</span>` : ''}
       </div>
       ${fd ? `<div class="card-date ${over?'overdue':''}"><i class="ti ti-calendar" style="font-size:11px" aria-hidden="true"></i>${over?'⚠ ':''}${fd}</div>` : ''}
