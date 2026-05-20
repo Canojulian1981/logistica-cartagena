@@ -14,19 +14,6 @@
       "commentAdmin": ""
     },
     {
-      "id": "t008",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Proceso Arreglo e Indemnizacion choque",
-      "desc": "",
-      "area": "Transporte",
-      "priority": "alta",
-      "assignee": "Cristian",
-      "date": "",
-      "status": "progress",
-      "commentCristian": "",
-      "commentAdmin": "Instrucciones de pasos a seguir los envie por correo"
-    },
-    {
       "id": "t010",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Arrego o Compra termometro laser",
