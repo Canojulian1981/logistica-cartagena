@@ -1,19 +1,6 @@
 {
   "tasks": [
     {
-      "id": "t013",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Poner platina en hueco bodega 2",
-      "desc": "",
-      "area": "Bodega",
-      "priority": "media",
-      "assignee": "Alfonso",
-      "date": "2026-05-29",
-      "status": "progress",
-      "commentCristian": "",
-      "commentAdmin": ""
-    },
-    {
       "id": "t014",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "instalacion Aires Oficinas",
