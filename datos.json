@@ -1,19 +1,6 @@
 {
   "tasks": [
     {
-      "id": "t005",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Tanque de agua",
-      "desc": "",
-      "area": "Bodega",
-      "priority": "media",
-      "assignee": "",
-      "date": "2026-05-29",
-      "status": "progress",
-      "commentCristian": "Pendiente registro",
-      "commentAdmin": ""
-    },
-    {
       "id": "t010",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Arrego o Compra termometro laser",
