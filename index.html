@@ -371,7 +371,7 @@ async function syncFromGitHub() {
       fileSha = data.sha;
       // Refrescar backup de config tras sync exitoso
       if (cfg) { localStorage.setItem(CONF_KEY + '_bk', JSON.stringify(cfg)); localStorage.setItem(CONF_KEY, JSON.stringify(cfg)); }
-      const decoded = JSON.parse(atob(data.content.replace(/\n/g, '')));
+      const decoded = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, '')))));
       tasks = decoded.tasks || [];
       renderBoard();
       setSyncState('ok', 'Sincronizado ' + now());
