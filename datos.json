@@ -157,19 +157,6 @@
       "commentAdmin": ""
     },
     {
-      "id": "t020",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Cotizar persianas",
-      "desc": "",
-      "area": "Mantenimientos y Arreglos",
-      "priority": "baja",
-      "assignee": "Cristian",
-      "date": "2026-05-29",
-      "status": "pending",
-      "commentCristian": "",
-      "commentAdmin": "Busca dos o tres cotizaciones y respectiva instalacion"
-    },
-    {
       "id": "t021",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Manejo de estibas de madera",
