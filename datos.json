@@ -1,19 +1,6 @@
 {
   "tasks": [
     {
-      "id": "t010",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Arrego o Compra termometro laser",
-      "desc": "",
-      "area": "Bodega",
-      "priority": "media",
-      "assignee": "Fabio",
-      "date": "2026-05-29",
-      "status": "progress",
-      "commentCristian": "",
-      "commentAdmin": ""
-    },
-    {
       "id": "t011",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Credito Tanqueo",
