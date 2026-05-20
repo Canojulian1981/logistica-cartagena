@@ -81,13 +81,15 @@
     {
       "id": "t010",
       "created": "2026-05-14T18:15:00.000Z",
-      "title": "Compra de termÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³metro lÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ser",
-      "desc": "Pendiente a que el seÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±or Fabio lo compre.",
+      "title": "Compra de termomtro",
+      "desc": "",
       "area": "Bodega",
       "priority": "media",
       "assignee": "Fabio",
-      "date": "",
-      "status": "progress"
+      "date": "2026-05-29",
+      "status": "progress",
+      "commentCristian": "",
+      "commentAdmin": ""
     },
     {
       "id": "t011",
