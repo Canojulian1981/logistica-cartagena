@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logística Cartagena – Seguimiento de Pendientes</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg-primary: #ffffff; --bg-secondary: #f6f8f5; --bg-tertiary: #eef0ec;
+  --text-primary: #1a1a18; --text-secondary: #5f5e5a; --text-tertiary: #888780;
+  --border: rgba(0,0,0,0.12); --border-md: rgba(0,0,0,0.2);
+  --radius: 8px; --radius-lg: 12px;
+  --green: #0F6E56; --green-dark: #085041;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #1e1e1c; --bg-secondary: #262624; --bg-tertiary: #1a1a18;
+    --text-primary: #f0efea; --text-secondary: #a8a79f; --text-tertiary: #686760;
+    --border: rgba(255,255,255,0.1); --border-md: rgba(255,255,255,0.18);
+  }
+}
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg-tertiary); min-height: 100vh; color: var(--text-primary); }
+
+/* SETUP SCREEN */
+.setup-overlay { position: fixed; inset: 0; background: var(--bg-tertiary); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+.setup-overlay.hidden { display: none; }
+.setup-card { background: var(--bg-primary); border-radius: var(--radius-lg); border: 0.5px solid var(--border); padding: 2rem; width: 100%; max-width: 480px; }
+.setup-logo { width: 48px; height: 48px; background: var(--green); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; color: white; font-size: 22px; margin-bottom: 1.25rem; }
+.setup-card h2 { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+.setup-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; }
+.setup-step { display: flex; gap: 10px; margin-bottom: 1rem; padding: 10px 12px; background: var(--bg-secondary); border-radius: var(--radius); border: 0.5px solid var(--border); }
+.step-num { width: 22px; height: 22px; background: var(--green); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.step-text { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+.step-text a { color: var(--green); text-decoration: none; font-weight: 500; }
+.step-text a:hover { text-decoration: underline; }
+.step-text code { background: var(--bg-tertiary); padding: 1px 5px; border-radius: 4px; font-family: monospace; font-size: 11px; }
+.form-group { margin-bottom: 1rem; }
+.form-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 5px; display: block; font-weight: 500; }
+.form-input { width: 100%; padding: 9px 12px; border: 0.5px solid var(--border-md); border-radius: var(--radius); font-size: 13px; background: var(--bg-primary); color: var(--text-primary); outline: none; }
+.form-input:focus { border-color: var(--green); }
+.btn-connect { width: 100%; background: var(--green); color: white; border: none; border-radius: var(--radius); padding: 11px; font-size: 14px; font-weight: 500; cursor: pointer; margin-top: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-connect:hover { background: var(--green-dark); }
+.setup-error { font-size: 12px; color: #A32D2D; margin-top: 8px; display: none; padding: 8px 12px; background: #FCEBEB; border-radius: var(--radius); }
+
+/* HEADER */
+.header { background: var(--bg-primary); border-bottom: 0.5px solid var(--border); padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; position: sticky; top: 0; z-index: 10; }
+.header-left { display: flex; align-items: center; gap: 10px; }
+.logo { width: 36px; height: 36px; background: var(--green); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: white; font-size: 17px; flex-shrink: 0; }
+.header h1 { font-size: 15px; font-weight: 600; }
+.header-sub { font-size: 11px; color: var(--text-secondary); margin-top: 1px; display: flex; align-items: center; gap: 5px; }
+.sync-dot { width: 6px; height: 6px; border-radius: 50%; background: #1D9E75; flex-shrink: 0; }
+.sync-dot.syncing { background: #EF9F27; animation: pulse 1s infinite; }
+.sync-dot.error { background: #E24B4A; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.btn-new { background: var(--green); color: white; border: none; border-radius: var(--radius); padding: 8px 14px; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+.btn-new:hover { background: var(--green-dark); }
+.btn-icon { background: transparent; border: 0.5px solid var(--border-md); border-radius: var(--radius); padding: 7px 10px; cursor: pointer; color: var(--text-secondary); font-size: 13px; display: flex; align-items: center; gap: 5px; }
+.btn-icon:hover { background: var(--bg-secondary); color: var(--text-primary); }
+
+/* STATS */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 1rem 1.5rem 0; }
+@media (max-width: 600px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+.stat-card { background: var(--bg-primary); border-radius: var(--radius); padding: 11px 14px; border: 0.5px solid var(--border); }
+.stat-label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+.stat-value { font-size: 22px; font-weight: 600; margin-top: 3px; }
+.s-total { color: var(--text-primary); } .s-pending { color: #BA7517; } .s-progress { color: #185FA5; } .s-done { color: #0F6E56; }
+
+/* FILTERS */
+.filters { padding: 0.85rem 1.5rem; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.search-wrap { display: flex; align-items: center; gap: 6px; background: var(--bg-primary); border: 0.5px solid var(--border-md); border-radius: var(--radius); padding: 7px 10px; flex: 1; min-width: 150px; max-width: 240px; }
+.search-wrap i { color: var(--text-secondary); font-size: 14px; }
+.search-wrap input { border: none; background: transparent; outline: none; font-size: 13px; color: var(--text-primary); width: 100%; }
+.search-wrap input::placeholder { color: var(--text-tertiary); }
+select { font-size: 13px; padding: 7px 10px; border-radius: var(--radius); border: 0.5px solid var(--border-md); background: var(--bg-primary); color: var(--text-primary); cursor: pointer; }
+
+/* BOARD */
+.board { padding: 0 1.5rem 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+@media (max-width: 750px) { .board { grid-template-columns: 1fr; } }
+.column { background: var(--bg-secondary); border-radius: var(--radius-lg); padding: 12px; border: 0.5px solid var(--border); }
+.col-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; padding: 0 2px; }
+.col-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); display: flex; align-items: center; gap: 7px; }
+.col-count { font-size: 11px; background: var(--bg-primary); border: 0.5px solid var(--border); border-radius: 20px; padding: 2px 9px; color: var(--text-secondary); }
+.dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.dot.pending { background: #EF9F27; } .dot.progress { background: #378ADD; } .dot.done { background: #1D9E75; }
+
+/* CARDS */
+.card { background: var(--bg-primary); border-radius: var(--radius); border: 0.5px solid var(--border); padding: 11px 12px; margin-bottom: 8px; }
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 7px; gap: 8px; }
+.card-title { font-size: 13px; font-weight: 500; line-height: 1.4; }
+.priority-badge { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+.priority-badge.alta { background: #FCEBEB; color: #A32D2D; }
+.priority-badge.media { background: #FAEEDA; color: #854F0B; }
+.priority-badge.baja { background: #EAF3DE; color: #3B6D11; }
+.card-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 9px; }
+.card-meta { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 5px; }
+.card-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+.tag { font-size: 10px; padding: 2px 7px; border-radius: 20px; background: var(--bg-secondary); color: var(--text-secondary); border: 0.5px solid var(--border); display: flex; align-items: center; gap: 3px; }
+.card-date { font-size: 11px; color: var(--text-tertiary); display: flex; align-items: center; gap: 3px; }
+.card-date.overdue { color: #A32D2D; font-weight: 500; }
+.card-actions { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 9px; border-top: 0.5px solid var(--border); padding-top: 9px; }
+.action-btn { font-size: 11px; padding: 4px 9px; border: 0.5px solid var(--border-md); border-radius: var(--radius); background: transparent; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 4px; }
+.action-btn:hover { background: var(--bg-secondary); color: var(--text-primary); }
+.action-btn.delete:hover { background: #FCEBEB; color: #A32D2D; border-color: #F09595; }
+
+/* MODAL */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100; align-items: center; justify-content: center; padding: 1rem; }
+.modal-overlay.active { display: flex; }
+.modal { background: var(--bg-primary); border-radius: var(--radius-lg); border: 0.5px solid var(--border); padding: 1.5rem; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
+.modal h2 { font-size: 16px; font-weight: 600; margin-bottom: 1.25rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+.form-group { margin-bottom: 1rem; }
+.form-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 5px; display: block; font-weight: 500; }
+.form-input { width: 100%; padding: 9px 12px; border: 0.5px solid var(--border-md); border-radius: var(--radius); font-size: 13px; background: var(--bg-primary); color: var(--text-primary); outline: none; font-family: inherit; }
+.form-input:focus { border-color: var(--green); }
+textarea.form-input { resize: vertical; min-height: 80px; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.5rem; border-top: 0.5px solid var(--border); padding-top: 1rem; }
+.btn-cancel { background: transparent; border: 0.5px solid var(--border-md); border-radius: var(--radius); padding: 8px 16px; font-size: 13px; cursor: pointer; color: var(--text-secondary); }
+.btn-cancel:hover { background: var(--bg-secondary); }
+.btn-save { background: var(--green); color: white; border: none; border-radius: var(--radius); padding: 8px 16px; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+.btn-save:hover { background: var(--green-dark); }
+.btn-save:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.empty { text-align: center; padding: 2rem 1rem; color: var(--text-tertiary); font-size: 13px; line-height: 1.6; }
+.empty i { font-size: 26px; margin-bottom: 8px; display: block; opacity: 0.4; }
+
+.toast { position: fixed; bottom: 24px; right: 24px; background: var(--text-primary); color: var(--bg-primary); padding: 10px 16px; border-radius: var(--radius); font-size: 13px; font-weight: 500; z-index: 300; opacity: 0; transform: translateY(8px); transition: all 0.2s; pointer-events: none; display: flex; align-items: center; gap: 7px; }
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.error-toast { background: #A32D2D; }
+
+.loading-bar { position: fixed; top: 0; left: 0; height: 2px; background: var(--green); width: 0%; transition: width 0.3s; z-index: 400; }
+.loading-bar.active { width: 70%; }
+.loading-bar.done { width: 100%; opacity: 0; transition: width 0.2s, opacity 0.4s 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="loading-bar" id="loading-bar"></div>
+
+<!-- SETUP SCREEN -->
+<div class="setup-overlay" id="setup-overlay">
+  <div class="setup-card">
+    <div class="setup-logo"><i class="ti ti-truck-delivery" aria-hidden="true"></i></div>
+    <h2>Configurar sincronización</h2>
+    <p>Los datos se guardan directamente en tu repositorio de GitHub. Configura el acceso una sola vez — el navegador lo recuerda.</p>
+
+    <div class="setup-step">
+      <div class="step-num">1</div>
+      <div class="step-text">Ve a <a href="https://github.com/settings/tokens/new" target="_blank">github.com/settings/tokens/new</a>, crea un token con permiso <code>repo</code> y cópialo aquí abajo.</div>
+    </div>
+    <div class="setup-step">
+      <div class="step-num">2</div>
+      <div class="step-text">Ingresa tu usuario de GitHub y el nombre del repositorio donde subiste esta app (ej: <code>logistica-cartagena</code>).</div>
+    </div>
+    <div class="setup-step">
+      <div class="step-num">3</div>
+      <div class="step-text">¡Listo! Los datos se guardan como un archivo <code>datos.json</code> en tu repositorio y se sincronizan en todos los dispositivos.</div>
+    </div>
+
+    <div class="form-group" style="margin-top:1.25rem">
+      <label class="form-label">Token de GitHub (ghp_...)</label>
+      <input type="password" id="setup-token" class="form-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Tu usuario de GitHub</label>
+        <input type="text" id="setup-user" class="form-input" placeholder="mi-usuario">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nombre del repositorio</label>
+        <input type="text" id="setup-repo" class="form-input" placeholder="logistica-cartagena">
+      </div>
+    </div>
+    <div class="setup-error" id="setup-error"></div>
+    <button class="btn-connect" onclick="connectGitHub()">
+      <i class="ti ti-brand-github" aria-hidden="true"></i> Conectar y continuar
+    </button>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" style="display:none">
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo"><i class="ti ti-truck-delivery" aria-hidden="true"></i></div>
+    <div>
+      <h1>Logística Cartagena</h1>
+      <div class="header-sub">
+        <span class="sync-dot" id="sync-dot"></span>
+        <span id="sync-status">Sincronizado</span>
+      </div>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="btn-icon" onclick="syncFromGitHub()" title="Sincronizar"><i class="ti ti-refresh" aria-hidden="true"></i></button>
+    <button class="btn-icon" onclick="showSettings()" title="Configuración"><i class="ti ti-settings" aria-hidden="true"></i></button>
+    <button class="btn-new" onclick="openModal()"><i class="ti ti-plus" aria-hidden="true"></i> Nuevo</button>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat-card"><div class="stat-label">Total</div><div class="stat-value s-total" id="count-total">0</div></div>
+  <div class="stat-card"><div class="stat-label">Pendiente</div><div class="stat-value s-pending" id="count-pending">0</div></div>
+  <div class="stat-card"><div class="stat-label">En progreso</div><div class="stat-value s-progress" id="count-progress">0</div></div>
+  <div class="stat-card"><div class="stat-label">Completado</div><div class="stat-value s-done" id="count-done">0</div></div>
+</div>
+
+<div class="filters">
+  <div class="search-wrap"><i class="ti ti-search" aria-hidden="true"></i><input type="text" id="search" placeholder="Buscar..." oninput="renderBoard()"></div>
+  <select id="filter-priority" onchange="renderBoard()">
+    <option value="">Todas las prioridades</option>
+    <option value="alta">Alta</option>
+    <option value="media">Media</option>
+    <option value="baja">Baja</option>
+  </select>
+  <select id="filter-area" onchange="renderBoard()">
+    <option value="">Todas las áreas</option>
+    <option value="Importaciones">Importaciones</option>
+    <option value="Exportaciones">Exportaciones</option>
+    <option value="Almacén">Almacén</option>
+    <option value="Transporte">Transporte</option>
+    <option value="Documentación">Documentación</option>
+    <option value="Aduanas">Aduanas</option>
+  </select>
+</div>
+
+<div class="board">
+  <div class="column">
+    <div class="col-header"><div class="col-title"><span class="dot pending"></span> Pendiente</div><span class="col-count" id="col-count-pending">0</span></div>
+    <div id="col-pending"></div>
+  </div>
+  <div class="column">
+    <div class="col-header"><div class="col-title"><span class="dot progress"></span> En progreso</div><span class="col-count" id="col-count-progress">0</span></div>
+    <div id="col-progress"></div>
+  </div>
+  <div class="column">
+    <div class="col-header"><div class="col-title"><span class="dot done"></span> Completado</div><span class="col-count" id="col-count-done">0</span></div>
+    <div id="col-done"></div>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<!-- TASK MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h2 id="modal-title">Nuevo pendiente</h2>
+    <div class="form-group">
+      <label class="form-label">Título *</label>
+      <input type="text" id="f-title" class="form-input" placeholder="Ej: Revisar documentos de importación">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Descripción</label>
+      <textarea id="f-desc" class="form-input" placeholder="Detalles del pendiente..."></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Área</label>
+        <select id="f-area" class="form-input">
+          <option>Importaciones</option><option>Exportaciones</option><option>Almacén</option>
+          <option>Transporte</option><option>Documentación</option><option>Aduanas</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Prioridad</label>
+        <select id="f-priority" class="form-input">
+          <option value="media">Media</option><option value="alta">Alta</option><option value="baja">Baja</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Responsable</label>
+        <input type="text" id="f-assignee" class="form-input" placeholder="Nombre">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Fecha límite</label>
+        <input type="date" id="f-date" class="form-input">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Estado</label>
+      <select id="f-status" class="form-input">
+        <option value="pending">Pendiente</option><option value="progress">En progreso</option><option value="done">Completado</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-save" id="btn-save" onclick="saveTask()"><i class="ti ti-device-floppy" aria-hidden="true"></i> Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────────────
+const CONF_KEY = 'gh_logistica_conf';
+const DATA_FILE = 'datos.json';
+let cfg = null;
+let tasks = [];
+let fileSha = null;
+let editingId = null;
+let saveTimer = null;
+
+// ── GITHUB API ───────────────────────────────────────────────────────────
+function apiUrl() {
+  return `https://api.github.com/repos/${cfg.user}/${cfg.repo}/contents/${DATA_FILE}`;
+}
+function headers() {
+  return { 'Authorization': `Bearer ${cfg.token}`, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github+json' };
+}
+
+async function syncFromGitHub() {
+  setSyncState('syncing', 'Sincronizando...');
+  setLoading(true);
+  try {
+    const res = await fetch(apiUrl() + '?t=' + Date.now(), { headers: headers() });
+    if (res.status === 404) {
+      // Archivo no existe aún — empezar vacío
+      tasks = [];
+      fileSha = null;
+      renderBoard();
+      setSyncState('ok', 'Listo — sin datos aún');
+    } else if (!res.ok) {
+      throw new Error('Error ' + res.status);
+    } else {
+      const data = await res.json();
+      fileSha = data.sha;
+      const decoded = JSON.parse(atob(data.content.replace(/\n/g, '')));
+      tasks = decoded.tasks || [];
+      renderBoard();
+      setSyncState('ok', 'Sincronizado ' + now());
+    }
+  } catch (e) {
+    setSyncState('error', 'Error al sincronizar');
+    toast('No se pudo sincronizar con GitHub', true);
+  }
+  setLoading(false);
+}
+
+async function saveToGitHub(msg) {
+  setSyncState('syncing', 'Guardando...');
+  setLoading(true);
+  try {
+    const body = { message: msg || 'Actualizar pendientes', content: btoa(unescape(encodeURIComponent(JSON.stringify({ tasks }, null, 2)))) };
+    if (fileSha) body.sha = fileSha;
+    const res = await fetch(apiUrl(), { method: 'PUT', headers: headers(), body: JSON.stringify(body) });
+    if (!res.ok) {
+      const err = await res.json();
+      // Conflicto SHA — re-sincronizar primero
+      if (res.status === 409 || res.status === 422) {
+        toast('Conflicto detectado, re-sincronizando...', true);
+        await syncFromGitHub();
+        return;
+      }
+      throw new Error(err.message || 'Error ' + res.status);
+    }
+    const data = await res.json();
+    fileSha = data.content.sha;
+    setSyncState('ok', 'Guardado ' + now());
+  } catch (e) {
+    setSyncState('error', 'Error al guardar');
+    toast('Error al guardar: ' + e.message, true);
+  }
+  setLoading(false);
+}
+
+// ── SETUP ────────────────────────────────────────────────────────────────
+function loadConfig() {
+  try { return JSON.parse(localStorage.getItem(CONF_KEY)); } catch { return null; }
+}
+
+async function connectGitHub() {
+  const token = document.getElementById('setup-token').value.trim();
+  const user  = document.getElementById('setup-user').value.trim();
+  const repo  = document.getElementById('setup-repo').value.trim();
+  const errEl = document.getElementById('setup-error');
+  errEl.style.display = 'none';
+
+  if (!token || !user || !repo) { showErr('Todos los campos son obligatorios.'); return; }
+
+  cfg = { token, user, repo };
+  // Validar credenciales
+  try {
+    const res = await fetch(`https://api.github.com/repos/${user}/${repo}`, { headers: headers() });
+    if (res.status === 404) { showErr('Repositorio no encontrado. Verifica usuario y nombre.'); cfg = null; return; }
+    if (res.status === 401) { showErr('Token inválido o sin permisos.'); cfg = null; return; }
+    if (!res.ok) { showErr('Error al conectar: ' + res.status); cfg = null; return; }
+  } catch { showErr('Sin conexión a internet.'); cfg = null; return; }
+
+  localStorage.setItem(CONF_KEY, JSON.stringify(cfg));
+  document.getElementById('setup-overlay').classList.add('hidden');
+  document.getElementById('app').style.display = 'block';
+  await syncFromGitHub();
+
+  function showErr(m) { errEl.textContent = m; errEl.style.display = 'block'; }
+}
+
+function showSettings() {
+  if (confirm('¿Desconectar esta cuenta de GitHub y reconfigurar?')) {
+    localStorage.removeItem(CONF_KEY);
+    location.reload();
+  }
+}
+
+// ── RENDER ───────────────────────────────────────────────────────────────
+function renderBoard() {
+  const search = document.getElementById('search').value.toLowerCase();
+  const fp = document.getElementById('filter-priority').value;
+  const fa = document.getElementById('filter-area').value;
+  const po = { alta:0, media:1, baja:2 };
+
+  const filtered = tasks.filter(t =>
+    (!search || [t.title, t.desc||'', t.assignee||''].join(' ').toLowerCase().includes(search)) &&
+    (!fp || t.priority === fp) && (!fa || t.area === fa)
+  );
+
+  const cols = { pending:[], progress:[], done:[] };
+  filtered.forEach(t => { if (cols[t.status]) cols[t.status].push(t); });
+
+  ['pending','progress','done'].forEach(s => {
+    const el = document.getElementById('col-' + s);
+    document.getElementById('col-count-' + s).textContent = cols[s].length;
+    el.innerHTML = !cols[s].length
+      ? '<div class="empty"><i class="ti ti-clipboard-list" aria-hidden="true"></i>Sin pendientes</div>'
+      : cols[s].sort((a,b)=>(po[a.priority]||1)-(po[b.priority]||1)).map(cardHTML).join('');
+  });
+
+  document.getElementById('count-total').textContent = filtered.length;
+  document.getElementById('count-pending').textContent = cols.pending.length;
+  document.getElementById('count-progress').textContent = cols.progress.length;
+  document.getElementById('count-done').textContent = cols.done.length;
+}
+
+function cardHTML(t) {
+  const over = t.date && t.status !== 'done' && new Date(t.date+'T00:00:00') < new Date(new Date().toDateString());
+  const nextLabel = { pending:'Mover a En progreso', progress:'Marcar completado', done:'Reabrir' };
+  const fd = t.date ? t.date.split('-').reverse().join('/') : '';
+  return `<div class="card">
+    <div class="card-top">
+      <div class="card-title">${esc(t.title)}</div>
+      <span class="priority-badge ${t.priority}">${t.priority}</span>
+    </div>
+    ${t.desc ? `<div class="card-desc">${esc(t.desc)}</div>` : ''}
+    <div class="card-meta">
+      <div class="card-tags">
+        <span class="tag"><i class="ti ti-building" style="font-size:10px" aria-hidden="true"></i> ${esc(t.area)}</span>
+        ${t.assignee ? `<span class="tag"><i class="ti ti-user" style="font-size:10px" aria-hidden="true"></i> ${esc(t.assignee)}</span>` : ''}
+      </div>
+      ${fd ? `<div class="card-date ${over?'overdue':''}"><i class="ti ti-calendar" style="font-size:11px" aria-hidden="true"></i>${over?'⚠ ':''}${fd}</div>` : ''}
+    </div>
+    <div class="card-actions">
+      <button class="action-btn" onclick="advanceStatus('${t.id}')"><i class="ti ti-arrow-right" style="font-size:11px" aria-hidden="true"></i> ${nextLabel[t.status]}</button>
+      <button class="action-btn" onclick="editTask('${t.id}')"><i class="ti ti-edit" style="font-size:11px" aria-hidden="true"></i> Editar</button>
+      <button class="action-btn delete" onclick="deleteTask('${t.id}')"><i class="ti ti-trash" style="font-size:11px" aria-hidden="true"></i> Eliminar</button>
+    </div>
+  </div>`;
+}
+
+// ── TASK CRUD ─────────────────────────────────────────────────────────────
+function nextId() { return 't' + Date.now(); }
+
+async function advanceStatus(id) {
+  const t = tasks.find(t => t.id === id);
+  const next = { pending:'progress', progress:'done', done:'pending' };
+  const label = { pending:'En progreso', progress:'Completado', done:'Pendiente' };
+  if (!t) return;
+  t.status = next[t.status];
+  renderBoard();
+  await saveToGitHub(`Mover "${t.title}" a ${label[t.status]}`);
+  toast('Movido a: ' + label[t.status]);
+}
+
+async function deleteTask(id) {
+  const t = tasks.find(t => t.id === id);
+  if (!t || !confirm('¿Eliminar este pendiente?')) return;
+  tasks = tasks.filter(t => t.id !== id);
+  renderBoard();
+  await saveToGitHub(`Eliminar "${t.title}"`);
+  toast('Pendiente eliminado');
+}
+
+function editTask(id) {
+  const t = tasks.find(t => t.id === id);
+  if (!t) return;
+  editingId = id;
+  document.getElementById('modal-title').textContent = 'Editar pendiente';
+  document.getElementById('f-title').value = t.title;
+  document.getElementById('f-desc').value = t.desc || '';
+  document.getElementById('f-area').value = t.area;
+  document.getElementById('f-priority').value = t.priority;
+  document.getElementById('f-assignee').value = t.assignee || '';
+  document.getElementById('f-date').value = t.date || '';
+  document.getElementById('f-status').value = t.status;
+  document.getElementById('modal').classList.add('active');
+}
+
+function openModal() {
+  editingId = null;
+  document.getElementById('modal-title').textContent = 'Nuevo pendiente';
+  ['f-title','f-desc','f-assignee','f-date'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f-area').value = 'Importaciones';
+  document.getElementById('f-priority').value = 'media';
+  document.getElementById('f-status').value = 'pending';
+  document.getElementById('modal').classList.add('active');
+  setTimeout(() => document.getElementById('f-title').focus(), 80);
+}
+
+function closeModal() { document.getElementById('modal').classList.remove('active'); editingId = null; }
+
+async function saveTask() {
+  const title = document.getElementById('f-title').value.trim();
+  if (!title) { alert('El título es requerido'); return; }
+  const btn = document.getElementById('btn-save');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="ti ti-loader" aria-hidden="true"></i> Guardando...';
+
+  const data = {
+    title,
+    desc: document.getElementById('f-desc').value.trim(),
+    area: document.getElementById('f-area').value,
+    priority: document.getElementById('f-priority').value,
+    assignee: document.getElementById('f-assignee').value.trim(),
+    date: document.getElementById('f-date').value,
+    status: document.getElementById('f-status').value,
+  };
+
+  if (editingId) {
+    Object.assign(tasks.find(t => t.id === editingId), data);
+    closeModal();
+    renderBoard();
+    await saveToGitHub(`Editar "${title}"`);
+    toast('Pendiente actualizado');
+  } else {
+    tasks.push({ id: nextId(), created: new Date().toISOString(), ...data });
+    closeModal();
+    renderBoard();
+    await saveToGitHub(`Agregar "${title}"`);
+    toast('Pendiente creado');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<i class="ti ti-device-floppy" aria-hidden="true"></i> Guardar';
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function now() { return new Date().toLocaleTimeString('es-CO', { hour:'2-digit', minute:'2-digit' }); }
+
+let toastTimer;
+function toast(msg, isError) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show' + (isError ? ' error-toast' : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+function setSyncState(state, msg) {
+  const dot = document.getElementById('sync-dot');
+  dot.className = 'sync-dot' + (state === 'syncing' ? ' syncing' : state === 'error' ? ' error' : '');
+  document.getElementById('sync-status').textContent = msg;
+}
+
+function setLoading(on) {
+  const bar = document.getElementById('loading-bar');
+  bar.className = 'loading-bar' + (on ? ' active' : ' done');
+  if (!on) setTimeout(() => bar.className = 'loading-bar', 700);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+document.getElementById('modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+cfg = loadConfig();
+if (cfg) {
+  document.getElementById('setup-overlay').classList.add('hidden');
+  document.getElementById('app').style.display = 'block';
+  syncFromGitHub();
+}
+// Auto-sync cada 2 minutos
+setInterval(() => { if (cfg && document.visibilityState === 'visible') syncFromGitHub(); }, 120000);
+</script>
+</body>
+</html>
