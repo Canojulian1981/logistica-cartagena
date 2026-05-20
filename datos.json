@@ -27,17 +27,6 @@
       "commentAdmin": ""
     },
     {
-      "id": "t003",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Certificado sanidad vehÃÂ­culo nuevo",
-      "desc": "CalificaciÃÂ³n de 100%.",
-      "area": "DocumentaciÃÂ³n",
-      "priority": "alta",
-      "assignee": "",
-      "date": "",
-      "status": "done"
-    },
-    {
       "id": "t004",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Arreglos de cuartos frÃÂ­os",
