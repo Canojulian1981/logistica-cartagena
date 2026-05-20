@@ -16,13 +16,15 @@
     {
       "id": "t002",
       "created": "2026-05-14T18:15:00.000Z",
-      "title": "Verificar recolecciÃÂ³n de basura sede nueva",
-      "desc": "Realizar visita a oficinas de Veholia nuevamente.",
-      "area": "Transporte",
+      "title": "Recoleccion Basura",
+      "desc": "",
+      "area": "Bodega",
       "priority": "alta",
       "assignee": "",
-      "date": "",
-      "status": "progress"
+      "date": "2026-05-22",
+      "status": "progress",
+      "commentCristian": "",
+      "commentAdmin": ""
     },
     {
       "id": "t003",
