@@ -1,19 +1,6 @@
 {
   "tasks": [
     {
-      "id": "t017",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Cotizacion cajon con llave",
-      "desc": "",
-      "area": "Bodega",
-      "priority": "baja",
-      "assignee": "Cristian",
-      "date": "",
-      "status": "progress",
-      "commentCristian": "",
-      "commentAdmin": ""
-    },
-    {
       "id": "t019",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Mantenimiento Estibador",
