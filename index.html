@@ -159,7 +159,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
   <div class="setup-card">
     <div class="setup-logo"><i class="ti ti-truck-delivery" aria-hidden="true"></i></div>
     <h2>Configurar sincronización</h2>
-    <p>Los datos se guardan directamente en tu repositorio de GitHub. Configura el acceso una sola vez — el navegador lo recuerda.</p>
+    <p>Los datos se guardan directamente en tu repositorio de GitHub. Configura el acceso <strong>una sola vez por dispositivo</strong> — el navegador lo guarda de forma segura y no te lo vuelve a pedir.</p>
 
     <div class="setup-step">
       <div class="step-num">1</div>
@@ -344,6 +344,8 @@ async function syncFromGitHub() {
     } else {
       const data = await res.json();
       fileSha = data.sha;
+      // Refrescar backup de config tras sync exitoso
+      if (cfg) { localStorage.setItem(CONF_KEY + '_bk', JSON.stringify(cfg)); localStorage.setItem(CONF_KEY, JSON.stringify(cfg)); }
       const decoded = JSON.parse(atob(data.content.replace(/\n/g, '')));
       tasks = decoded.tasks || [];
       renderBoard();
@@ -385,7 +387,19 @@ async function saveToGitHub(msg) {
 
 // ── SETUP ────────────────────────────────────────────────────────────────
 function loadConfig() {
-  try { return JSON.parse(localStorage.getItem(CONF_KEY)); } catch { return null; }
+  // Intenta cargar desde localStorage primero, luego desde backup
+  try {
+    const primary = localStorage.getItem(CONF_KEY);
+    if (primary) return JSON.parse(primary);
+    // Buscar backup con clave alternativa
+    const backup = localStorage.getItem(CONF_KEY + '_bk');
+    if (backup) {
+      // Restaurar al principal
+      localStorage.setItem(CONF_KEY, backup);
+      return JSON.parse(backup);
+    }
+    return null;
+  } catch { return null; }
 }
 
 async function connectGitHub() {
@@ -407,6 +421,7 @@ async function connectGitHub() {
   } catch { showErr('Sin conexión a internet.'); cfg = null; return; }
 
   localStorage.setItem(CONF_KEY, JSON.stringify(cfg));
+  localStorage.setItem(CONF_KEY + '_bk', JSON.stringify(cfg)); // backup
   document.getElementById('setup-overlay').classList.add('hidden');
   document.getElementById('app').style.display = 'block';
   await syncFromGitHub();
@@ -417,6 +432,7 @@ async function connectGitHub() {
 function showSettings() {
   if (confirm('¿Desconectar esta cuenta de GitHub y reconfigurar?')) {
     localStorage.removeItem(CONF_KEY);
+    localStorage.removeItem(CONF_KEY + '_bk');
     location.reload();
   }
 }
@@ -610,7 +626,7 @@ function setLoading(on) {
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────
-document.getElementById('modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+// Modal solo se cierra con Cancelar o Escape, no al hacer clic afuera
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 cfg = loadConfig();
