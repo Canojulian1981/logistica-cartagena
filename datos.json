@@ -1,3 +1,17 @@
 {
-  "tasks": []
+  "tasks": [
+    {
+      "id": "t1779259237119",
+      "created": "2026-05-20T06:40:37.119Z",
+      "title": "pruebaaaaaaaa",
+      "desc": "",
+      "commentCristian": "",
+      "area": "Prospecto",
+      "priority": "media",
+      "assignee": "",
+      "date": "",
+      "status": "pending",
+      "commentAdmin": ""
+    }
+  ]
 }
