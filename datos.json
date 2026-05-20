@@ -68,13 +68,15 @@
     {
       "id": "t008",
       "created": "2026-05-14T18:15:00.000Z",
-      "title": "RevisiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n proceso choque vehÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ­culo",
-      "desc": "Se envÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ­a videos y fotos a abogado y se realiza el agendamiento de vehÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ­culo para revisiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n.",
+      "title": "Proceso Arreglo e Indemnizacion choque",
+      "desc": "",
       "area": "Transporte",
-      "priority": "media",
-      "assignee": "",
+      "priority": "alta",
+      "assignee": "Cristian",
       "date": "",
-      "status": "progress"
+      "status": "progress",
+      "commentCristian": "",
+      "commentAdmin": ""
     },
     {
       "id": "t010",
