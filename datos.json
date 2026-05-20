@@ -207,6 +207,19 @@
       "status": "progress",
       "commentCristian": "",
       "commentAdmin": ""
+    },
+    {
+      "id": "t1779253216917",
+      "created": "2026-05-20T05:00:16.917Z",
+      "title": "Recibo de trabajo completo cuartos con respectiva acta",
+      "desc": "",
+      "commentCristian": "",
+      "area": "Mantenimientos y Arreglos",
+      "priority": "media",
+      "assignee": "Cristian",
+      "date": "",
+      "status": "pending",
+      "commentAdmin": ""
     }
   ]
 }
