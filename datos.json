@@ -1,19 +1,6 @@
 {
   "tasks": [
     {
-      "id": "t1779253309424",
-      "created": "2026-05-20T05:01:49.424Z",
-      "title": "Protocolo recibo Coca Cola",
-      "desc": "",
-      "commentCristian": "",
-      "area": "Bodega",
-      "priority": "alta",
-      "assignee": "Jesus Y Cristian",
-      "date": "2026-05-22",
-      "status": "pending",
-      "commentAdmin": ""
-    },
-    {
       "id": "t1779258061608",
       "created": "2026-05-20T06:21:01.608Z",
       "title": "Entrega muestras Sofitel Cala Blanca",
