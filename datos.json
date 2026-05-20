@@ -40,19 +40,6 @@
       "commentAdmin": ""
     },
     {
-      "id": "t007",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Revision y Mantenimiento 5000 km",
-      "desc": "",
-      "area": "Transporte",
-      "priority": "media",
-      "assignee": "",
-      "date": "2026-05-22",
-      "status": "pending",
-      "commentCristian": "",
-      "commentAdmin": ""
-    },
-    {
       "id": "t008",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Proceso Arreglo e Indemnizacion choque",
