@@ -27,19 +27,6 @@
       "commentAdmin": ""
     },
     {
-      "id": "t018",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "To do Venta Carton",
-      "desc": "",
-      "area": "Bodega",
-      "priority": "alta",
-      "assignee": "",
-      "date": "",
-      "status": "progress",
-      "commentCristian": "",
-      "commentAdmin": "Actualizar con venta Cobre"
-    },
-    {
       "id": "t019",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Mantenimiento Estibador",
