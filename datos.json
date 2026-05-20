@@ -27,19 +27,6 @@
       "commentAdmin": ""
     },
     {
-      "id": "t012",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Alquiler Frio Crepes",
-      "desc": "",
-      "area": "Bodega",
-      "priority": "alta",
-      "assignee": "Cristian",
-      "date": "2026-05-22",
-      "status": "progress",
-      "commentCristian": "",
-      "commentAdmin": ""
-    },
-    {
       "id": "t013",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Poner platina en hueco bodega 2",
