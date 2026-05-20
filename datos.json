@@ -1,19 +1,6 @@
 {
   "tasks": [
     {
-      "id": "t002",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Recoleccion Basura",
-      "desc": "",
-      "area": "Bodega",
-      "priority": "alta",
-      "assignee": "",
-      "date": "2026-05-22",
-      "status": "progress",
-      "commentCristian": "",
-      "commentAdmin": ""
-    },
-    {
       "id": "t004",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Arreglo Piso y Entrada Cuartos Frios",
