@@ -70,12 +70,12 @@
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Revisión vehículo 5000 km",
       "desc": "",
-      "commentCristian": "Se realiza llamada y nos informan que nos agendarán para día jueves o viernes de la otra semana, pendiente confirmación de día.",
+      "commentCristian": "Cita para el sabado",
       "commentAdmin": "",
       "area": "Transporte",
       "priority": "media",
-      "assignee": "",
-      "date": "",
+      "assignee": "Cristian",
+      "date": "2026-05-23",
       "status": "progress"
     },
     {
