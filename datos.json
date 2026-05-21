@@ -92,19 +92,6 @@
       "status": "progress"
     },
     {
-      "id": "t009",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Compra de extintores",
-      "desc": "",
-      "commentCristian": "Se instalaron 4 unidades nuevas en la bodega.",
-      "commentAdmin": "",
-      "area": "Bodega",
-      "priority": "media",
-      "assignee": "",
-      "date": "",
-      "status": "done"
-    },
-    {
       "id": "t010",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Compra de termómetro láser",
