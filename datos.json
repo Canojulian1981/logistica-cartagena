@@ -27,19 +27,6 @@
       "status": "progress"
     },
     {
-      "id": "t003",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Certificado sanidad vehículo nuevo",
-      "desc": "",
-      "commentCristian": "Calificación de 100%.",
-      "commentAdmin": "",
-      "area": "Documentación",
-      "priority": "alta",
-      "assignee": "",
-      "date": "",
-      "status": "done"
-    },
-    {
       "id": "t004",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Arreglos de cuartos fríos",
