@@ -122,12 +122,12 @@
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Poner platina en hueco bodega 2",
       "desc": "",
-      "commentCristian": "Se le informó al señor Alfonso, quedó en verificar.",
-      "commentAdmin": "",
+      "commentCristian": "",
+      "commentAdmin": "Cristian esto es importante terminarlo pronto.",
       "area": "Bodega",
       "priority": "media",
       "assignee": "Alfonso",
-      "date": "",
+      "date": "2026-06-12",
       "status": "progress"
     },
     {
