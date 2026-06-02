@@ -53,19 +53,6 @@
       "status": "progress"
     },
     {
-      "id": "t006",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Visita Karibana 29 de abril 3 pm",
-      "desc": "",
-      "commentCristian": "Pendiente informe de calificación.",
-      "commentAdmin": "",
-      "area": "Documentación",
-      "priority": "media",
-      "assignee": "",
-      "date": "2026-04-29",
-      "status": "done"
-    },
-    {
       "id": "t007",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Revisión vehículo 5000 km",
