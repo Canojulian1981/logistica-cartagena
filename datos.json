@@ -201,7 +201,7 @@
       "title": "Mantenimiento estibador",
       "desc": "",
       "commentCristian": "Se realiza cotización, pendiente realizar otras más.",
-      "commentAdmin": "se envia nueva cotizacion.",
+      "commentAdmin": "se aprueba nueva cotizacion y se solicita agenda para mantenimiento la próxima semana.",
       "area": "Bodega",
       "priority": "baja",
       "assignee": "",
