@@ -53,19 +53,6 @@
       "status": "progress"
     },
     {
-      "id": "t007",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Revisión vehículo 5000 km",
-      "desc": "",
-      "commentCristian": "Cita para el sabado",
-      "commentAdmin": "se realiza mantenimiento de vehículo dia sábado, sin ninguna novedad. por favor sube el to do con todo el reporte de lo que le hicieron al carro a un to do",
-      "area": "Transporte",
-      "priority": "alta",
-      "assignee": "Cristian",
-      "date": "2026-06-05",
-      "status": "done"
-    },
-    {
       "id": "t008",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Revisión proceso choque vehículo",
