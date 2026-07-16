@@ -183,19 +183,6 @@
       "status": "done"
     },
     {
-      "id": "t019",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Mantenimiento estibador",
-      "desc": "",
-      "commentCristian": "Se realiza cotización, pendiente realizar otras más.",
-      "commentAdmin": "se aprueba nueva cotizacion y se solicita agenda para mantenimiento la próxima semana.",
-      "area": "Bodega",
-      "priority": "baja",
-      "assignee": "",
-      "date": "",
-      "status": "progress"
-    },
-    {
       "id": "t020",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "Cotizar persianas",
