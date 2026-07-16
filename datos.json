@@ -246,6 +246,19 @@
       "date": "2026-06-05",
       "status": "progress",
       "commentAdmin": "se habla con el señor fabio sobre lo solicitado y me informa que revisara sobre el tema"
+    },
+    {
+      "id": "t1784241518321",
+      "created": "2026-07-16T22:38:38.321Z",
+      "title": "Montar indicador de mantenimientos, permisos, lavados y todo lo relacionado con el camion",
+      "desc": "",
+      "commentCristian": "Apoyate con Fabio",
+      "area": "Transporte",
+      "priority": "alta",
+      "assignee": "",
+      "date": "",
+      "status": "pending",
+      "commentAdmin": ""
     }
   ]
 }
