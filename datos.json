@@ -157,19 +157,6 @@
       "status": "progress"
     },
     {
-      "id": "t017",
-      "created": "2026-05-14T18:15:00.000Z",
-      "title": "Cotización cajón con llave",
-      "desc": "",
-      "commentCristian": "Se habló nuevamente con trabajador, informó que cobraría 120 pero no hemos vuelto a tener respuesta de él.",
-      "commentAdmin": "",
-      "area": "Bodega",
-      "priority": "baja",
-      "assignee": "",
-      "date": "",
-      "status": "progress"
-    },
-    {
       "id": "t018",
       "created": "2026-05-14T18:15:00.000Z",
       "title": "To do venta cartón",
